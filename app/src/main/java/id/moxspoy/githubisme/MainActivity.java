@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Show loading to user
-        btnGetUser.setText("Loading data...");
+        changeBtnTitle("Loading data...");
 
         //Request data to github
 
@@ -81,24 +81,36 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                btnGetUser.setText("Finished");
-                User user = response.body();
+                if(response.isSuccessful()) {
+                    changeBtnTitle("Search again");
+                    User user = response.body();
 
-                //Oncompleted, passing to Intent
-                Intent intent = new Intent(getApplicationContext(), SingleUserActivity.class);
-                intent.putExtra(Constant.INTENT_NAME, user.getName());
-                intent.putExtra(Constant.INTENT_AVATAR_URL, user.getAvatar_url());
-                intent.putExtra(Constant.INTENT_BIO, user.getBio());
-                intent.putExtra(Constant.INTENT_LOGIN, user.getLogin());
-                startActivity(intent);
+                    //Oncompleted, passing to Intent
+                    Intent intent = new Intent(getApplicationContext(), SingleUserActivity.class);
+                    intent.putExtra(Constant.INTENT_NAME, user.getName());
+                    intent.putExtra(Constant.INTENT_AVATAR_URL, user.getAvatar_url());
+                    intent.putExtra(Constant.INTENT_BIO, user.getBio());
+                    intent.putExtra(Constant.INTENT_LOGIN, user.getLogin());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Github user with name " +
+                            userName + " not found", Toast.LENGTH_SHORT).show();
+                    changeBtnTitle("Search again");
+                }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                changeBtnTitle("Search again");
             }
+
         });
 
+    }
+
+    private void changeBtnTitle(String title) {
+        btnGetUser.setText(title);
     }
 
     @Override
