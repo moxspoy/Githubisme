@@ -1,23 +1,27 @@
-package id.moxspoy.githubisme;
+package id.moxspoy.githubisme.fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.robertlevonyan.views.chip.Chip;
 
-import java.util.PrimitiveIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import id.moxspoy.githubisme.Constant;
+import id.moxspoy.githubisme.R;
 import id.moxspoy.githubisme.activity.SingleUserActivity;
 import id.moxspoy.githubisme.model.User;
 import id.moxspoy.githubisme.network.GithubService;
@@ -25,9 +29,12 @@ import id.moxspoy.githubisme.network.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class HomeFragment extends Fragment {
+
 
     @BindView(R.id.et_username)
     TextInputEditText editTextUserName;
@@ -40,18 +47,22 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.chip_google)
     Chip chipGoogle;
 
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ButterKnife.bind(this);
-
-        if(BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
+        ButterKnife.bind(this, view);
 
         initChipListener();
+
+        return view;
     }
 
     private void initChipListener() {
@@ -66,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isValidUsername (String username) {
+    private boolean isValidUsername(String username) {
         //check if username is empty
         if (username.isEmpty()) {
             return false;
@@ -84,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
         String userName = editTextUserName.getText().toString().toLowerCase();
 
         //Validate input
-        if(!isValidUsername(userName)) {
-            Toast.makeText(this, "Ensure username is not empty and only aplhanumeric",
+        if (!isValidUsername(userName)) {
+            Toast.makeText(getContext(), "Ensure username is not empty and only aplhanumeric",
                     Toast.LENGTH_SHORT).show();
             btnGetUser.setText("Try with another username");
             return;
@@ -100,19 +111,19 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     changeBtnTitle("Search again");
                     User user = response.body();
 
                     //Oncompleted, passing to Intent
-                    Intent intent = new Intent(getApplicationContext(), SingleUserActivity.class);
+                    Intent intent = new Intent(getContext(), SingleUserActivity.class);
                     intent.putExtra(Constant.INTENT_NAME, user.getName());
                     intent.putExtra(Constant.INTENT_AVATAR_URL, user.getAvatar_url());
                     intent.putExtra(Constant.INTENT_BIO, user.getBio());
                     intent.putExtra(Constant.INTENT_LOGIN, user.getLogin());
                     startActivity(intent);
                 } else {
-                    Toast.makeText(MainActivity.this, "Github user with name " +
+                    Toast.makeText(getContext(), "Github user with name " +
                             userName + " not found", Toast.LENGTH_SHORT).show();
                     changeBtnTitle("Search again");
                 }
@@ -120,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 changeBtnTitle("Search again");
             }
 
@@ -136,44 +147,4 @@ public class MainActivity extends AppCompatActivity {
         editTextUserName.setText(value);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Timber.d("onStart");
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Timber.d("onResume");
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Timber.d("onPause");
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Timber.d("onStop");
-    }
-
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Timber.d("onRestart");
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Timber.d("onDestroy");
-    }
 }
