@@ -1,7 +1,6 @@
 package id.moxspoy.githubisme.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.card.MaterialCardView;
-
 import java.util.List;
 
-import id.moxspoy.githubisme.Constant;
 import id.moxspoy.githubisme.R;
-import id.moxspoy.githubisme.activity.SingleUserActivity;
 import id.moxspoy.githubisme.model.Repository;
-import id.moxspoy.githubisme.model.User;
 
 public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAdapter.MyViewHolder> {
 
@@ -47,7 +39,7 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
         holder.name.setText(repository.getName());
         holder.created.setText(repository.getCreated_at());
 
-        if(repository.getDescription().isEmpty()) {
+        if (repository.getDescription() == null) {
             holder.desc.setText("Description not available");
         } else {
             holder.desc.setText(repository.getDescription());
