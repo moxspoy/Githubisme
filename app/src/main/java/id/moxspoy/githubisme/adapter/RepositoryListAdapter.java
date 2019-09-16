@@ -45,8 +45,13 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Repository repository = repositories.get(position);
         holder.name.setText(repository.getName());
-        holder.desc.setText(repository.getDescription());
         holder.created.setText(repository.getCreated_at());
+
+        if(repository.getDescription().isEmpty()) {
+            holder.desc.setText("Description not available");
+        } else {
+            holder.desc.setText(repository.getDescription());
+        }
 
         if(repository.isPrivate()){
             holder.image.setImageResource(R.drawable.ic_lock_black_24dp);

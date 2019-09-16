@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.robertlevonyan.views.chip.Chip;
 
+import java.util.PrimitiveIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
     TextInputEditText editTextUserName;
     @BindView(R.id.btn_user)
     MaterialButton btnGetUser;
+    @BindView(R.id.chip_moxspoy)
+    Chip chipMoxspoy;
+    @BindView(R.id.chip_jake)
+    Chip chipJake;
+    @BindView(R.id.chip_google)
+    Chip chipGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +51,19 @@ public class MainActivity extends AppCompatActivity {
             Timber.plant(new Timber.DebugTree());
         }
 
-        final String onCreateTag = "onCreated with Timber";
-        Timber.d(onCreateTag);
+        initChipListener();
+    }
+
+    private void initChipListener() {
+        chipMoxspoy.setOnClickListener(view -> {
+            setEditText("moxspoy");
+        });
+        chipJake.setOnClickListener(view -> {
+            setEditText("jakewharton");
+        });
+        chipGoogle.setOnClickListener(view -> {
+            setEditText("google");
+        });
     }
 
     private boolean isValidUsername (String username) {
@@ -112,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
         btnGetUser.setText(title);
     }
 
+    private void setEditText(String value) {
+        editTextUserName.setText(value);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -152,5 +176,4 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Timber.d("onDestroy");
     }
-
 }

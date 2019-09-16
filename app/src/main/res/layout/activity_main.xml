@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/main_cv_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,6 +65,48 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_cv_container"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Favourite github user"
+            android:fontFamily="@font/fredoka"
+            android:textColor="@color/colorPrimary"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+            <com.robertlevonyan.views.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="moxspoy"
+                android:layout_marginStart="10dp"
+                android:id="@+id/chip_moxspoy"/>
+            <com.robertlevonyan.views.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="jakewharton"
+                android:layout_marginStart="10dp"
+                android:id="@+id/chip_jake"/>
+            <com.robertlevonyan.views.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="google"
+                android:layout_marginStart="10dp"
+                android:id="@+id/chip_google"/>
+        </LinearLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

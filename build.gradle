@@ -31,4 +31,5 @@ ext {
     glideVersion = '4.9.0'
     retrofitVersion = '2.6.1'
     gsonVersion = '2.8.5'
+    chipVersion = '2.0.3'
 }
