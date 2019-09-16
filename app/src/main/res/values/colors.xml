@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#8f94fa</color>
     <color name="colorPrimaryDark">#4e54cf</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#2980b9</color>
     <color name="putih">#FFFFFF</color>
 
     <!--  Gradien Blue - White  -->
