@@ -13,7 +13,7 @@ public class GithubService {
 
     private static Retrofit retrofit = builder.build();
 
-    private static OkHttpClient.Builder httpClien = new OkHttpClient.Builder();
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     public static <S> S createService(Class<S> serviceClass) {
         return retrofit.create(serviceClass);

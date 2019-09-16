@@ -8,9 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.button.MaterialButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.moxspoy.githubisme.Constant;
 import id.moxspoy.githubisme.R;
 
@@ -24,6 +28,8 @@ public class SingleUserActivity extends AppCompatActivity {
     TextView tvLogin;
     @BindView(R.id.img_user)
     ImageView imageUser;
+    @BindView(R.id.btn_see_follower)
+    MaterialButton btnSeeFollower;
 
     private String userName, bio, login, imageUrlUser;
 
@@ -48,9 +54,25 @@ public class SingleUserActivity extends AppCompatActivity {
 
     private void initView() {
         tvUserName.setText(userName);
+
         tvBio.setText(bio);
         tvLogin.setText(login);
 
-        Glide.with(this).load(imageUrlUser).into(imageUser);
+        Glide.with(this).load(imageUrlUser)
+                .apply(RequestOptions.circleCropTransform())
+                .into(imageUser);
+        imageUser.setClickable(true);
+    }
+
+    @OnClick(R.id.img_user)
+    void toFollowerActivity() {
+        Intent intent = new Intent(getApplicationContext(), FollowerListActivity.class);
+        intent.putExtra(Constant.INTENT_NAME, login);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_see_follower)
+    void seeFollower() {
+        toFollowerActivity();
     }
 }

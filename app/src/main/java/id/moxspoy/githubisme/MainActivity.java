@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         changeBtnTitle("Loading data...");
 
         //Request data to github
-
         UserService userService = GithubService.createService(UserService.class);
         Call<User> call = userService.getUser(userName);
         call.enqueue(new Callback<User>() {

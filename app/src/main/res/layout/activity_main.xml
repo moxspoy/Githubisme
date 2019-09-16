@@ -42,7 +42,8 @@
                 android:layout_height="match_parent"
                 android:hint="Input username of github"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"/>
 
 
             <RelativeLayout
