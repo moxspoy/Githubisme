@@ -1,6 +1,7 @@
 package id.moxspoy.githubisme.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
+import id.moxspoy.githubisme.Constant;
 import id.moxspoy.githubisme.R;
+import id.moxspoy.githubisme.activity.SingleUserActivity;
 import id.moxspoy.githubisme.model.User;
 import timber.log.Timber;
 
@@ -52,6 +56,16 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
                 .into(
                         holder.imageUser
                 );
+
+        holder.cardView.setOnClickListener(view -> {
+            User user = users.get(position);
+            Intent intent = new Intent(context, SingleUserActivity.class);
+            intent.putExtra(Constant.INTENT_NAME, user.getName());
+            intent.putExtra(Constant.INTENT_AVATAR_URL, user.getAvatar_url());
+            intent.putExtra(Constant.INTENT_BIO, user.getBio());
+            intent.putExtra(Constant.INTENT_LOGIN, user.getLogin());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -64,12 +78,14 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
         ImageView imageUser;
         TextView tvUsername;
         TextView tvBio;
+        MaterialCardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageUser = itemView.findViewById(R.id.img_item_follower_list);
             tvUsername = itemView.findViewById(R.id.tv_usernamer_follower_list);
             tvBio = itemView.findViewById(R.id.tv_location_follower_list);
+            cardView = itemView.findViewById(R.id.cv_follower_list);
         }
     }
 }

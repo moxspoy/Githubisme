@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import id.moxspoy.githubisme.Constant;
 import id.moxspoy.githubisme.R;
 import id.moxspoy.githubisme.adapter.FollowerListAdapter;
+import id.moxspoy.githubisme.model.Repository;
 import id.moxspoy.githubisme.model.User;
 import id.moxspoy.githubisme.network.GithubService;
 import id.moxspoy.githubisme.network.UserService;
@@ -51,7 +52,7 @@ public class FollowerListActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                Timber.d(response.raw().toString());
+
                 if (response.isSuccessful()) {
                     dismissLoadingBar();
                     List<User> users = response.body();
